@@ -1,0 +1,21 @@
+FROM scratch
+COPY webserver /bin/webserver
+ENTRYPOINT ["/bin/webserver"]
+
+# -- if we build an image to be as small as possible we can build it from scratch
+# docker build -t webserver . -f Dockerfile.light
+
+# -- But it won't run, we'll get an error like this as it will expect C stdlib to be available
+# docker run -ti -p 8000:8080 webserver
+# ERROR as go expects stdlib to be available
+# docker: Error response from daemon: OCI runtime create failed: container_linux.go:349: starting container process caused "exec: \"/bin/sh\": stat /bin/sh: no such file or directory": unknown.
+
+# -- So we need to build for linux and disable C stdlib
+# GOOS=linux CGO_ENABLED=0 go build
+# docker build -t webserver . -f Dockerfile.light
+# docker images
+# docker run -ti -p 8000:8080 webserver
+
+# -- We can also tell it to ignore the cache
+# docker build -t webserver . -f Dockerfile.light --no-cache
+# docker images

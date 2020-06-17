@@ -1,0 +1,29 @@
+FROM golang AS builder
+WORKDIR /build
+COPY . .
+RUN CGO_ENABLED=0 go build
+
+FROM scratch
+COPY --from=builder /build/webserver /bin/webserver
+ENTRYPOINT ["/bin/webserver"]
+
+# -- run the image, but better to pull as it's not really runnable
+# docker run golang
+
+# -- Just pull down the golang image
+# docker pull golang
+
+# -- Get a list of ran images IDs
+# docker ps -qa
+
+# -- Clean up all the images that have been run
+# docker rm $(docker ps -qa)
+
+# -- Build with the new temporary build image
+# docker build -t webserver . -f Dockerfile.ci
+
+# -- Ok, let's run it
+# docker run -ti -p 8000:8080 webserver
+
+# -- Can also tell it to trhough away the image after it's run and also give it a name
+# docker run -ti -p 8000:8080 --rm --name mydockerimage webserver
