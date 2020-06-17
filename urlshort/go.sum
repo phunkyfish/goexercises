@@ -1,1 +1,4 @@
 github.com/phunkyfish/goexercises v0.0.0-20200609144205-96e92884528b h1:FkOwM3o9Sh+A24XStURb5uZ2vzLhp0pgw6JTqk2B9LQ=
+github.com/phunkyfish/goexercises v0.0.0-20200609151137-2d5bc862b0da h1:rcHwoMSE2TsjXRYPwtrOfommiNcizGav/X3LELA/hjU=
+github.com/phunkyfish/goexercises/urlshorthandler v0.0.0-20200609151137-2d5bc862b0da h1:CuR3IJn7FJF1MQCxlqYMw7LHAXdxwo4cDLauSs50EXo=
+github.com/phunkyfish/goexercises/urlshorthandler v0.0.0-20200609151137-2d5bc862b0da/go.mod h1:yPn8YoYAxf7/9l1CY0pSdlLw8dB7ugIqjEw8y+uElMk=

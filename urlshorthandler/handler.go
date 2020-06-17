@@ -1,8 +1,13 @@
 package urlshorthandler
 
 import (
+	"fmt"
 	"net/http"
 )
+
+func init() {
+	fmt.Println("adjsajdfha")
+}
 
 // MapHandler will return an http.HandlerFunc (which also
 // implements http.Handler) that will attempt to map any
