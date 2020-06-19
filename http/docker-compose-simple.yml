@@ -1,0 +1,30 @@
+helloworld:
+  image: webserver
+  ports:
+    - "8000:8080"
+
+# - Bring up images using compose
+# docker-compose up
+
+# - Or do it in the background
+# docker-compose up -d
+
+# - We can also bring all services down
+# docker-compose down
+
+# - See it running
+# docker ps
+
+# - Check it's working
+# curl localhost:8000/
+# curl localhost:8000/metrics
+
+# - Check the logs
+# docker-compose logs
+
+# - Rebuild at any point to debug
+# docker build -t webserver . -f Dockerfile.ci
+
+# - This will fail right now as only one process can bind to the port
+# - This will work once we add the nginx reverse proxy
+# docker-compose up --scale helloworld=2

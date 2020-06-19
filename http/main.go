@@ -13,6 +13,7 @@ func main() {
 	http.HandleFunc("/test2", HelloServer)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello2, %s!", r.URL.Path[1:])
+		fmt.Printf("Hello2, %s!", r.URL.Path[1:])
 	})
 	fmt.Printf("About to start:")
 	http.ListenAndServe(":8080", nil)

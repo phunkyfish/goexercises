@@ -1,0 +1,66 @@
+helloworld:
+  image: webserver
+reverseproxy:
+  image: nginx:latest
+  ports:
+    - "8080:80"
+    - "8443:443"
+  links:
+    - helloworld
+  volumes:
+    - ./nginx-configs/:/etc/nginx/conf.d/
+    - ../../dev-certs/local/:/etc/letsencrypt/
+
+# - We can inspect any running service
+# docker ps
+# docker images
+# docker inspect http_helloworld_1
+
+# - We can open a shell on niginx instance to have a look around
+# docker exec -ti http_reverseproxy_1 bash
+
+# - Now we need to create the nginx configs
+# - We'll create a default route with a static local file
+# mkdir nginx-configs
+# cd nginx-configs
+# vi helloworld.conf
+# vi default.conf
+
+# - Let's test it
+# docker-compose up -d
+# curl localhost:8000
+# curl localhost:8080
+# curl localhost:80
+# docker ps
+
+# - If there is any issue check the logs
+# docker-compose logs reverseproxy
+
+# - We can use curl to supply a resolve for helloworld if we like
+# curl http://helloworld:8080 --resolve helloworld:8080:127.0.0.1
+# - If you need to see what's being sent by either side run curl in verbose mode
+# curl http://helloworld:8080 --resolve helloworld:8080:127.0.0.1 -v
+
+# - Create an A record to localhost for the domain and ceheck it
+# dig local.phunkyfish.net
+
+# - Once configured the service can be access via a full URL on your localhost!
+# curl http://local.phunkyfish.net:8080
+
+# - Now we want to create a cert so we can add https
+# mkdir ~/golang/dev-certs/local
+# docker run -v $(pwd)/../../dev-certs/local:/etc/letsencrypt -ti --rm certbot/certbot certonly --manual -d local.phunkyfish.net --preferred-challenges dns
+
+# - We will need to create a TXT DNS entry as the challenge with our registrar
+# - We can test it before proceeding
+# dig -t txt _acme-challenge.local.phunkyfish.net
+
+# - Now we add the certs volume and the ports
+# - Also we add the ssl stanza to helloworld.conf
+# - Our cert will be at
+# ls -l ../../dev-certs/local/live/local.phunkyfish.net/
+
+# docker-compose up -d
+# docker ps
+# curl https://local.phunkyfish.net:8443
+# whois local.phunkyfish.net
